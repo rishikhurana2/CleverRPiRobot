@@ -32,10 +32,48 @@ public class CleverRobot extends IRobotAdapter {
 	}
 	
 	private boolean loop() throws Exception{
-		System.out.println("LEFT SONAR: " + sonar.readSonar("left"));
-		Thread.sleep(1000);
-		System.out.println("RIGHT SONAR: " + sonar.readSonar("right"));
-		System.out.println("CENTER SONAR: " + sonar.readSonar("center"));
+		readSensors(100);
+		driveDirect(400,400);
+		if((isBumpLeft()) && (isBumpRight())){
+			driveDirect(-400,-400);
+			Thread.sleep(1000);
+			driveDirect(0,150);
+			Thread.sleep(1000);
+			
+		}
+		else{
+		if(isBumpLeft()){
+			//Make roomba back up
+			driveDirect(-400,-400);
+			Thread.sleep(1000);
+			
+			//rotate right
+			driveDirect(150,0);
+			Thread.sleep(1000);
+			
+			//Drive forward
+			driveDirect(400,400);
+			Thread.sleep(1000);
+		}
+		if(isBumpRight()){
+			//Make roomba back up
+			driveDirect(-400,-400);
+			Thread.sleep(1000);
+			
+			//rotate left
+			driveDirect(0,150);
+			Thread.sleep(1000);
+			
+			//Drive Forward
+			driveDirect(400,400);
+			Thread.sleep(1000);
+		}
+		
+		if(isLightBump()){
+			driveDirect(100,100);
+			Thread.sleep(1000);
+		}
+		}
 		
 		return true;
 	}
