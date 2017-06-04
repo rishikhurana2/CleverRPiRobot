@@ -32,23 +32,33 @@ public class CleverRobot extends IRobotAdapter {
 	}
 	
 	private boolean loop() throws Exception{
+		int [] bumps = getLightBumps();
 		readSensors(100);
-		driveDirect(400,400);
-		if((isBumpLeft()) && (isBumpRight())){
-			driveDirect(-400,-400);
+		driveDirect(100,100);
+		for(int i = 0; i < bumps.length; i++){
+		System.out.println(i);	
+		}
+		
+		//do something if both the sensors are bumped
+		if(isBumpLeft() && isBumpRight()){
+			
+			//Back up
+			driveDirect(-100,-100);
 			Thread.sleep(1000);
-			driveDirect(0,150);
+			
+			//Turn Left
+			driveDirect(150,0);
 			Thread.sleep(1000);
 			
 		}
 		else{
 		if(isBumpLeft()){
 			//Make roomba back up
-			driveDirect(-400,-400);
+			driveDirect(-100,-100);
 			Thread.sleep(1000);
 			
 			//rotate right
-			driveDirect(150,0);
+			driveDirect(0,100);
 			Thread.sleep(1000);
 			
 			//Drive forward
@@ -57,22 +67,29 @@ public class CleverRobot extends IRobotAdapter {
 		}
 		if(isBumpRight()){
 			//Make roomba back up
-			driveDirect(-400,-400);
+			driveDirect(-100,-100);
 			Thread.sleep(1000);
 			
 			//rotate left
-			driveDirect(0,150);
+			driveDirect(0,100);
 			Thread.sleep(1000);
 			
 			//Drive Forward
-			driveDirect(400,400);
-			Thread.sleep(1000);
-		}
-		
-		if(isLightBump()){
 			driveDirect(100,100);
 			Thread.sleep(1000);
 		}
+		
+		if(bumps[5] > 2){
+			driveDirect(-100,-100);
+			Thread.sleep(1000);
+			driveDirect(0,100);
+		}
+		if(bumps[1] > 2){
+		   driveDirect(-100,-100);
+		   Thread.sleep(1000);
+		   driveDirect(100,0);
+			
+	}
 		}
 		
 		return true;
