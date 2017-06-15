@@ -44,9 +44,9 @@ public class CleverRobot extends IRobotAdapter {
 		//System.out.println("RIGHT SONAR: " + sonar.readSonar("right"));
 		//System.out.println("CENTER SONAR: " + sonar.readSonar("center"));
 		cam.takeRGBPicture();
-		System.out.println(cam.getRedPercentage(15));
-		System.out.println(cam.getBluePercentage(15));
-		System.out.println(cam.getGreenPercentage(15));
+		System.out.println(cam.getRedPercentage(15,true));
+		System.out.println(cam.getBluePercentage(15,false));
+		System.out.println(cam.getGreenPercentage(15,false));
 		return true;
 	}
 

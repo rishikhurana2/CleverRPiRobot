@@ -7,29 +7,33 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
 import com.hopding.jrpicam.RPiCamera;
 import com.hopding.jrpicam.exceptions.FailedToRunRaspistillException;
 
-public class Camera extends RPiCamera{
+public class Camera extends RPiCamera {
 	int[] pixels;
 	int width;
 	int height;
+
 	Camera(int width, int height) throws FailedToRunRaspistillException, IOException, InterruptedException {
 		super("/home/pi/Desktop");
 		this.width = width;
 		this.height = height;
-		
+
 	}
+
 	public void takeRGBPicture() {
 		try {
-			pixels= this.takeStillAsRGB(width, height, false);
+			pixels = this.takeStillAsRGB(width, height, false);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	public int[] getPixels(){
+
+	public int[] getPixels() {
 		return pixels;
 	}
-	public double getRedPercentage(int redThreshold) {
+
+	public double getRedPercentage(int redThreshold, boolean debug) {
 		// returns the percentage of red pixels / total pixels
-		
+
 		int numPixels = (pixels.length) / 3;
 		boolean[] redPixels = new boolean[numPixels];
 		for (int i = 0; i < pixels.length; i += 3) {
@@ -60,25 +64,27 @@ public class Camera extends RPiCamera{
 				trueRedPixels++;
 			}
 		}
-		int count = 0;
-		for (boolean pix: redPixels) {
-			if (count%100 == 0) {
-				System.out.println();
+		if (debug) {
+			int count = 0;
+			for (boolean pix : redPixels) {
+				
+				if (pix) {
+					System.out.print(1);
+				} else {
+					System.out.print(0);
+				}
+				if (count % 100 == 0) {
+					System.out.println();
+				}
+				count++;
 			}
-			if (pix) {
-				System.out.print(1);
-			}
-			else{
-				System.out.print(0);
-			}
-			count++;
 		}
 
 		double redPercentage = (double) trueRedPixels / numPixels;
 		return redPercentage * 100;
 	}
 
-	public double getBluePercentage(int blueThreshold) {
+	public double getBluePercentage(int blueThreshold, boolean debug) {
 		// returns the percentage of blue pixels / total pixels
 		int numPixels = (pixels.length) / 3;
 		boolean[] bluePixels = new boolean[numPixels];
@@ -111,12 +117,26 @@ public class Camera extends RPiCamera{
 				trueBluePixels++;
 			}
 		}
+		if (debug) {
+			int count = 0;
+			for (boolean pix : bluePixels) {
+				if (count % 100 == 0) {
+					System.out.println();
+				}
+				if (pix) {
+					System.out.print(1);
+				} else {
+					System.out.print(0);
+				}
+				count++;
+			}
+		}
 
 		double bluePercentage = (double) trueBluePixels / numPixels;
 		return bluePercentage * 100;
 	}
 
-	public double getGreenPercentage(int greenThreshold) {
+	public double getGreenPercentage(int greenThreshold, boolean debug) {
 		// returns the percentage of green pixels / total pixels
 		int numPixels = (pixels.length) / 3;
 		boolean[] greenPixels = new boolean[numPixels];
@@ -150,6 +170,20 @@ public class Camera extends RPiCamera{
 				trueGreenPixels++;
 			}
 
+		}
+		if (debug) {
+			int count = 0;
+			for (boolean pix : greenPixels) {
+				if (count % 100 == 0) {
+					System.out.println();
+				}
+				if (pix) {
+					System.out.print(1);
+				} else {
+					System.out.print(0);
+				}
+				count++;
+			}
 		}
 		double greenPercentage = (double) trueGreenPixels / numPixels;
 		return greenPercentage * 100;
