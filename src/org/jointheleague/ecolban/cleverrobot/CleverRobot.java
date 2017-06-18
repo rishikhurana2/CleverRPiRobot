@@ -14,6 +14,7 @@ public class CleverRobot extends IRobotAdapter {
 	Sonar sonar = new Sonar();
 	private boolean tailLight;
 	Camera cam;
+
 	public CleverRobot(IRobotInterface iRobot) {
 		super(iRobot);
 	}
@@ -30,88 +31,74 @@ public class CleverRobot extends IRobotAdapter {
 	}
 
 	private void setup() throws Exception {
-		//driveDirect(100, 100);
-		cam = new Camera(100,100);
-		//for(int i : cam.pixels){
-		//	System.out.println(i);
-		//}
+		// driveDirect(100, 100);
+		// cam = new Camera(100, 100);
+		// for(int i : cam.pixels){
+		// System.out.println(i);
+		// }
 	}
-<<<<<<< HEAD
-	
-	private boolean loop() throws Exception{
-		int [] bumps = getLightBumps();
-		readSensors(100);
-		driveDirect(100,100);
-		for(int i = 0; i < bumps.length; i++){
-		System.out.println(i);	
-		}
-		
-		//do something if both the sensors are bumped
-		if(isBumpLeft() && isBumpRight()){
-			
-			//Back up
-			driveDirect(-100,-100);
-			Thread.sleep(1000);
-			
-			//Turn Left
-			driveDirect(150,0);
-			Thread.sleep(1000);
-			
-		}
-		else{
-		if(isBumpLeft()){
-			//Make roomba back up
-			driveDirect(-100,-100);
-			Thread.sleep(1000);
-			
-			//rotate right
-			driveDirect(0,100);
-			Thread.sleep(1000);
-			
-			//Drive forward
-			driveDirect(400,400);
-			Thread.sleep(1000);
-		}
-		if(isBumpRight()){
-			//Make roomba back up
-			driveDirect(-100,-100);
-			Thread.sleep(1000);
-			
-			//rotate left
-			driveDirect(0,100);
-			Thread.sleep(1000);
-			
-			//Drive Forward
-			driveDirect(100,100);
-			Thread.sleep(1000);
-		}
-		
-		if(bumps[5] > 2){
-			driveDirect(-100,-100);
-			Thread.sleep(1000);
-			driveDirect(0,100);
-		}
-		if(bumps[1] > 2){
-		   driveDirect(-100,-100);
-		   Thread.sleep(1000);
-		   driveDirect(100,0);
-			
-	}
-		}
-		
-=======
 
 	private boolean loop() throws Exception {
-		//System.out.println("LEFT SONAR: " + sonar.readSonar("left"));
-		Thread.sleep(1000);
-		//setTailLight(tailLight = !tailLight);
-		//System.out.println("RIGHT SONAR: " + sonar.readSonar("right"));
-		//System.out.println("CENTER SONAR: " + sonar.readSonar("center"));
-		cam.takeRGBPicture();
-		System.out.println(cam.getRedPercentage(15,true));
-		System.out.println(cam.getBluePercentage(15,false));
-		System.out.println(cam.getGreenPercentage(15,false));
->>>>>>> jointheleague/master
+		int[] bumps = getLightBumps();
+		readSensors(100);
+		driveDirect(300, 300);
+		for (int i = 0; i < bumps.length; i++) {
+			System.out.print(bumps[i] + " ");
+		}
+		System.out.print(bumps + "\n");
+		// do something if both the sensors are bumped
+		if (isBumpLeft() && isBumpRight()) {
+
+			// Back up
+			driveDirect(-100, -100);
+			Thread.sleep(1000);
+
+			// Turn Left
+			driveDirect(200, 0);
+			Thread.sleep(1000);
+
+		} else {
+			if (isBumpLeft()) {
+				// Make roomba back up
+				driveDirect(-100, -100);
+				Thread.sleep(1000);
+
+				// rotate right
+				driveDirect(0, 100);
+				Thread.sleep(1000);
+
+				// Drive forward
+				driveDirect(400, 400);
+				Thread.sleep(1000);
+			}
+			if (isBumpRight()) {
+				// Make roomba back up
+				driveDirect(-100, -100);
+				Thread.sleep(1000);
+
+				// rotate left
+				driveDirect(0, 100);
+				Thread.sleep(1000);
+
+				// Drive Forward
+				driveDirect(100, 100);
+				Thread.sleep(1000);
+			}
+
+			if (bumps[5] > 1000) {
+				driveDirect(-100, -100);
+				Thread.sleep(1000);
+				driveDirect(0, 100);
+			}
+			if (bumps[0] > 1000) {
+				driveDirect(-100, -100);
+				Thread.sleep(1000);
+				driveDirect(100, 0);
+
+			}
+
+		}
+
 		return true;
 	}
 
